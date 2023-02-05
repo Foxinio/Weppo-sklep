@@ -1,45 +1,79 @@
-import Express from 'express'
-import authorize from './authorization'
+import {Express} from 'express'
+import {authorize, roles} from './authorization'
 
-export function app_get (req, res) {
-	res.render('app', {user: req.user});
+function logout(res) {
+	res.cookie('user', '', {maxAge: -1, signed: true});
 }
 
-export function login_get (req, res) {
+function app_get(req, res) {
+	// TODO: database request for items
+	const items = [];
+	res.render('app', {user: req.user, items});
+}
+
+function login_get(_req, res) {
 	res.render('login');
 }
 
-export function logout_get (req, res) {
-	res.cookie('user', '', {maxAge: -1, signed: true});
+function logout_get(_req, res) {
+	logout(res);
 	res.redirect('/');
 }
 
-export function new_item_get (req,res) {
-	res.render('new_item');
-}
-
-export function change_item_get (req, res) {
-	let itemToChange = req.query.itemToChange;
-	let item = {}; // database request for item
-	res.render('change_item', { item });
-}
-
-export function new_account_get (req, res) {
-	res.cookie('user', '', {maxAge: -1});
+function new_account_get(_req, res) {
+	logout(res);
 	res.render('new_account');
 }
 
-export function basket_get (req, res) {
-	res.cookie
+function cart_get(req, res) {
+	let cart: object[] = [];
+	if (req.cookies.cart) {
+		cart = req.cookies.cart;
+		// TODO: database request for item
+//		cart = cart.map(database.get_item_by_id);
+	}
+	res.render('cart', {cart});
 }
 
+function new_item_get(_req, res) {
+	res.render('new_item');
+}
 
-export default function register_gets(app: Express.Express): void {
+function change_item_get(req, res) {
+	const itemToChange = req.query.itemToChange;
+	// TODO: database request for item
+	const item = {name: itemToChange};
+	res.render('change_item', {item});
+}
+
+function list_users(_req, res) {
+	// TODO: database request for users
+	const users = [];
+	res.render('list', {to_list: users});
+}
+
+function list_orders(_req, res) {
+	// TODO: database request for orders
+	const orders = [];
+	res.render('list', {to_list: orders});
+}
+
+export default function register_gets(app: Express): void {
 	app.get('/', authorize(), app_get);
 
 	app.get('/login', authorize(), login_get);
 
-	app.get('/logout', authorize(), logout_get);
+	app.get('/logout', authorize(roles.admin, roles.normal_user), logout_get);
 
-	app.get('/basket', authorize(
+	app.get('/new_account', authorize(), new_account_get);
+
+	app.get('/cart', authorize(roles.normal_user), cart_get);
+
+	app.get('/newitem', authorize(roles.admin), new_item_get);
+
+	app.get('/changeitem', authorize(roles.admin), change_item_get);
+
+	app.get('/list_users', authorize(roles.admin), list_users);
+
+	app.get('/list_orders', authorize(roles.admin), list_orders);
 }

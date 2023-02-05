@@ -1,23 +1,19 @@
-function isUserInRole(user, role) {
-	// trywialna implementacja na potrzeby demonstracyjne
-	return user == role;
+function does_user_hold_role(user, role) {
+	// TODO: add database request to check if user holds that role
+	return true;
 }
 
 export enum roles {
-	normal_user
+	normal_user = "loggedin_user",
+	admin = "admin"
+}
 
-/**
-*
-* @param {http.IncomingMessage} req
-* @param {http.ServerResponse} res
-* @param {*} next
-*/
-export default function authorize(...roles) {
+export function authorize(...roles: roles[]) {
 	return function (req, res, next) {
 		if (req.signedCookies.user) {
-			let user = req.signedCookies.user;
+			const user = req.signedCookies.user;
 			if (roles.length == 0 ||
-				roles.some(role => isUserInRole(user, role))
+				roles.some(role => does_user_hold_role(user, role))
 			) {
 				req.user = user;
 				return next();
