@@ -1,24 +1,20 @@
+import express from 'express';
 import register_handlers from './middleware/interface'
-import register_api from './middleware/api'
-import register_gets from './middleware/gets'
-import register_posts from './middleware/posts'
 
 import { createServer } from 'https';
-import * as express from 'express';
 //import fs from 'node:fs'
+
+console.log(JSON.stringify(express));
 
 const app = express();
 const port = process.env.port || 3000;
 
-register_api(app);
-register_gets(app);
-register_posts(app);
 register_handlers(app);
 
 createServer(
 //	{
 //		pfx: fs.readFileSync('cert.pfx'),
-//		passphrase: 'password'
+//		passphrase: process.env.CERT_PASSWORD || 'password'
 //	},
 	app).listen(port);
 

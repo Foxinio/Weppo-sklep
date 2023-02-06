@@ -1,6 +1,7 @@
 function does_user_hold_role(user, role) {
 	// TODO: add database request to check if user holds that role
-	return true;
+	// return database.does_user_hold_role(user, role);
+	return user === role;
 }
 
 export enum roles {
