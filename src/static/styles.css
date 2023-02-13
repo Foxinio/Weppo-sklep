@@ -1,0 +1,72 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    
+}
+
+.header-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.header{
+    justify-self: center;
+}
+
+.right-corner-menu {
+    justify-self: right;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-items: center;
+}
+
+.username{
+    justify-self: right;
+}
+
+.login-button {
+    width: 7rem;
+    justify-self: right;
+}
+
+.form {
+    width: 40rem;
+    background-color: darksalmon;
+    justify-self: center;
+    padding: 1rem;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    justify-items: center;
+}
+
+.item_list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.item {
+    display: grid;
+    background-color: lightcoral;
+    padding: 1rem;
+}
+
+.button {
+    height: 2rem;
+    background-color: antiquewhite;
+    border-radius: 20rem;
+}
+
+.add-to-cart_button {
+    width: 2rem;
+    justify-self: right;
+}
+
+.justify-center {
+    justify-self: center;
+}
