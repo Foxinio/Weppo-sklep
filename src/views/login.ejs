@@ -13,11 +13,6 @@
 
         <header class="header-container">
             <h1 class="header">Little shop of horrors</h1>
-            <section class="right-corner-menu">
-                <input type="button" class="button cart-button" value="Your cart" >
-                <p class="username"> <%= username %> </p>
-                <button class="button login-button"> Log in/out </button>
-            </section>
         </header>
 
         <form class="login-form form" method="POST">
@@ -30,13 +25,13 @@
             
             <section class="form_element">
                 <label for="password" class="label password_label">Password</label>
-                <input id="password" name="password" class="input password_input" required />
+                <input id="password" name="password" class="input password_input" type="password" required />
             </section>
             
             <button type="submit" class="button submit_button">Log in</button>
         </form>
 
-        <form class="signin-form form" method="POST">
+        <form class="signin-form form" method="POST" action="/add_user">
             <h2 class="signin-form-header"> Don't have an account? Sign in here: </h2>
 
             <section class="form_element">
@@ -46,7 +41,7 @@
 
             <section class="form_element">
                 <label for="password" class="label password_label">Password</label>
-                <input id="password" name="password" class="input password_input" required />
+                <input id="password" name="password" class="input password_input" type="password" required />
             </section>
             
             <button type="submit" class="button submit_button">sign in</button>
@@ -55,3 +50,4 @@
 
     </body>
 </html>
+
