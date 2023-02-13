@@ -12,8 +12,7 @@ export function authorize(...roles: roles[]) {
 		}
 		else if (req.signedCookies.user) {
 			const user = req.signedCookies.user;
-			const user_role = await db.get_user_role(user);
-			if (roles.some(role => role === user_role)) {
+			if (roles.some(role => role === user.role)) {
 				req.user = user;
 				return next();
 			}

@@ -1,8 +1,8 @@
 import { Client } from 'pg';
+import { roles } from '../middleware/authorization';
 
 type Id = number;
-type User = { id?: Id, username: string };
-type UserWithPassword = User & { passwordHash: string }
+type User = { id?: Id, username: string, passwordHash: string, role?: roles };
 type Item = { id?: Id, name: string, description: string, price: number };
 type Cart = {
   id?: Id,
@@ -77,33 +77,19 @@ class Database {
 
   async get_user(user: { id: Id }): Promise<User> {
     let res = await this.client.query<User>(
-      'SELECT Id, Username FROM Users WHERE ID = $1', [user.id]
+      'SELECT * FROM Users WHERE ID = $1', [user.id]
     );
     return res.rows[0];
   }
 
   async get_user_by_username(username: string): Promise<User> {
     let res = await this.client.query<User>(
-      'SELECT Id, Username FROM Users WHERE Username = $1', [username]
+      'SELECT * FROM Users WHERE Username = $1', [username]
     );
     return res.rows[0];
   }
 
-  async get_user_with_password(user: { id: Id }): Promise<UserWithPassword> {
-    let res = await this.client.query<UserWithPassword>(
-      'SELECT Id, Username, PasswordHash FROM Users WHERE ID = $1', [user.id]
-    );
-    return res.rows[0];
-  }
-
-  async get_user_role(user: { id: Id }): Promise<string> {
-    let res = await this.client.query<{ role: string }>(
-      'SELECT Role FROM Users WHERE ID = $1', [user.id]
-    );
-    return res.rows[0].role;
-  }
-
-  async add_user(user: UserWithPassword): Promise<User> {
+  async add_user(user: User): Promise<User> {
     let orderRes = await this.client.query(
       'INSERT INTO Orders (Open) VALUES (TRUE) RETURNING *'
     );

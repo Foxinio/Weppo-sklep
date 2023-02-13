@@ -1,5 +1,5 @@
 import express from 'express'
-import {hashSync, compareSync} from 'bcrypt'
+import bcrypt from 'bcrypt'
 
 import {authorize, roles} from './authorization'
 import db from '../backend/database'
@@ -29,7 +29,7 @@ async function add_user(req, res) {
 
 	// maybe sanitize fields
 	if (validate_login(username) && validate_password(password)) {
-		const hash = hashSync(password, 12);
+		const hash = await bcrypt.hash(password, 12);
 		const new_user = {username, passwordHash: hash};
 		await db.add_user(new_user);
 		// TODO: add user to database
@@ -83,11 +83,9 @@ async function login_post(req, res) {
 
 	// TODO: check if password matches
 	// const scrambled_password = database.get_scrambled_password(username);
-	const user_with_password = await db.get_user_with_password(username);
-	const scrambled_password = user_with_password.passwordHash;
-	const result = compareSync(password, scrambled_password);
+	const user = await db.get_user(username);
 
-	if (result) {
+	if (user && await bcrypt.compare(password, user.passwordHash)) {
 		console.log(`loging in user ${username}`);
 		res.cookie('user', username, {signed: true});
 		redirect_after_login(req,res);
