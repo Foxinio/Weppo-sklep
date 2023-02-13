@@ -4,6 +4,15 @@ import {hashSync, compareSync} from 'bcrypt'
 import {authorize, roles} from './authorization'
 import db from '../backend/database'
 
+function redirect_after_login(req, res) {
+	const returnUrl = req.query.returnUrl;
+	if (returnUrl) {
+		res.redirect(returnUrl);
+	} else {
+		res.redirect('/');
+	}
+}
+
 function validate_login(login: string): boolean {
 	return /^[a-zA-Z0-9_-]+$/.test(login);
 }
@@ -26,8 +35,7 @@ async function add_user(req, res) {
 		// TODO: add user to database
 		// database.add_user(new_user);
 		console.log(`added user ${JSON.stringify(new_user)} to database`);
-		res.status(200);
-		res.end();
+		redirect_after_login(req,res);
 	}
 	res.status(400);
 	res.end();
@@ -82,8 +90,7 @@ async function login_post(req, res) {
 	if (result) {
 		console.log(`loging in user ${username}`);
 		res.cookie('user', username, {signed: true});
-		const returnUrl = req.query.returnUrl;
-		res.redirect(returnUrl);
+		redirect_after_login(req,res);
 	} else {
 		res.render('login', {message: "Given password and username don't match"});
 	}

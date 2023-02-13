@@ -17,11 +17,16 @@ export default function register_handlers(app: express.Express) {
 	app.use(express.urlencoded({extended: true}));
 	app.use(cookieParser(cookie_secret));
 
-	app.use(express.static("../static"));
+	app.use(express.static("./src/static"));
+	app.use((req, res, next) => {
+		console.log("user connected");
+		next();
+	})
 
 	// app.use(session({resave:true, saveUninitialized: true, secret: session_secret }));
 
 	register_api(app);
 	register_gets(app);
 	register_posts(app);
+	console.log("all handlers registered");
 }
