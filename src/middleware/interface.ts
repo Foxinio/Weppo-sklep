@@ -1,10 +1,10 @@
-import register_api from './api'
-import register_gets from './gets'
-import register_posts from './posts'
-
 import * as express from 'express';
 import cookieParser from 'cookie-parser';
 // import session from 'express-session';
+
+import register_api from './api'
+import register_gets from './gets'
+import register_posts from './posts'
 
 export default function register_handlers(app: express.Express) {
 	app.set('view engine', 'ejs');

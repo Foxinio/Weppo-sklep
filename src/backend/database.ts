@@ -136,3 +136,5 @@ class Database {
     );
   }
 }
+
+export let singleton: Database; //= new Database();

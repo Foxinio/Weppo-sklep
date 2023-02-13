@@ -1,66 +1,68 @@
 import {Express} from 'express'
+
 import {authorize, roles} from './authorization'
+import { singleton as db } from '../backend/database'
 
 function logout(res) {
 	res.cookie('user', '', {maxAge: -1, signed: true});
 }
 
-function app_get(req, res) {
+async function app_get(req, res) {
 	// TODO: database request for items
 	// const items = database.get_items();
 	const items = [];
 	res.render('app', {user: req.user, items});
 }
 
-function login_get(_req, res) {
+async function login_get(_req, res) {
 	res.render('login');
 }
 
-function logout_get(_req, res) {
+async function logout_get(_req, res) {
 	logout(res);
 	res.redirect('/');
 }
 
-function new_account_get(_req, res) {
+async function new_account_get(_req, res) {
 	logout(res);
 	res.render('new_account');
 }
 
-function cart_get(req, res) {
+async function cart_get(req, res) {
 	const user = req.signedCookies.user;
 	// TODO: requset database for users cart
 	// const cart = database.get_cart(user);
-	const cart = [];
-	
+	const cart = await db.get_cart_by_user(user);
+
 	// TODO: database request for item
 	// cart = cart.map(database.get_item_by_id);
 	console.log(`get request for cart site`);
 	res.render('cart', {cart});
 }
 
-function new_item_get(_req, res) {
+async function new_item_get(_req, res) {
 	res.render('new_item');
 }
 
-function change_item_get(req, res) {
+async function change_item_get(req, res) {
 	const itemToChange = req.params.id;
 	// TODO: database request for item
 	// const item = database.get_item_by_id(itemToChange);
-	const item = {name: itemToChange};
+	const item = await db.get_item({id: itemToChange});
 	res.render('change_item', {item});
 }
 
-function list_users(_req, res) {
+async function list_users(_req, res) {
 	// TODO: database request for users
 	// const users = database.get_users();
-	const users = [];
+	const users = await db.get_users();
 	res.render('list', {to_list: users});
 }
 
-function list_orders(_req, res) {
+async function list_orders(_req, res) {
 	// TODO: database request for orders
 	// const users = database.get_orders();
-	const orders = [];
+	const orders = await db.get_orders();
 	res.render('list', {to_list: orders});
 }
 
