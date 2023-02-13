@@ -1,7 +1,7 @@
 import * as express from 'express'
 
 import {authorize, roles} from './authorization'
-import { singleton as db } from '../backend/database'
+import db from '../backend/database'
 
 async function get_item(req, res) {
 	const id = req.params.id;

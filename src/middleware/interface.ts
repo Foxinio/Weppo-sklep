@@ -8,7 +8,7 @@ import register_posts from './posts'
 
 export default function register_handlers(app: express.Express) {
 	app.set('view engine', 'ejs');
-	app.set('views', './views');
+	app.set('views', './src/views');
 
 	// const session_secret = process.env.SESSION_SECRET || "qewhiugriasgy";
 	const cookie_secret  = process.env.COOKIE_SECRET  || "sgs90890s8g90as8rg90as8g9r8a0srg8";

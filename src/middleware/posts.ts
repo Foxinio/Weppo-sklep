@@ -2,7 +2,7 @@ import express from 'express'
 import {hashSync, compareSync} from 'bcrypt'
 
 import {authorize, roles} from './authorization'
-import {singleton as db} from '../backend/database'
+import db from '../backend/database'
 
 function validate_login(login: string): boolean {
 	return /^[a-zA-Z0-9_-]+$/.test(login);

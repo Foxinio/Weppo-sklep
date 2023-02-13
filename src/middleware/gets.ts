@@ -1,7 +1,7 @@
 import {Express} from 'express'
 
 import {authorize, roles} from './authorization'
-import { singleton as db } from '../backend/database'
+import db from '../backend/database'
 
 function logout(res) {
 	res.cookie('user', '', {maxAge: -1, signed: true});

@@ -1,4 +1,4 @@
-import { singleton as db } from '../backend/database'
+import db from '../backend/database'
 
 export enum roles {
 	normal_user = "loggedin_user",

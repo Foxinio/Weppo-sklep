@@ -23,6 +23,10 @@ class Database {
     this.client = client
   }
 
+  async connect() {
+    await this.client.connect();
+  }
+
   async get_items(): Promise<Item[]> {
     let res = await this.client.query<Item>(
       'SELECT * FROM Item');
@@ -73,31 +77,38 @@ class Database {
 
   async get_user(user: { id: Id }): Promise<User> {
     let res = await this.client.query<User>(
-      'SELECT Id, Username FROM User WHERE ID = $1', [user.id]
+      'SELECT Id, Username FROM Users WHERE ID = $1', [user.id]
+    );
+    return res.rows[0];
+  }
+
+  async get_user_by_username(username: string): Promise<User> {
+    let res = await this.client.query<User>(
+      'SELECT Id, Username FROM Users WHERE Username = $1', [username]
     );
     return res.rows[0];
   }
 
   async get_user_with_password(user: { id: Id }): Promise<UserWithPassword> {
     let res = await this.client.query<UserWithPassword>(
-      'SELECT Id, Username, PasswordHash FROM User WHERE ID = $1', [user.id]
+      'SELECT Id, Username, PasswordHash FROM Users WHERE ID = $1', [user.id]
     );
     return res.rows[0];
   }
 
   async get_user_role(user: { id: Id }): Promise<string> {
     let res = await this.client.query<{ role: string }>(
-      'SELECT Role FROM User WHERE ID = $1', [user.id]
+      'SELECT Role FROM Users WHERE ID = $1', [user.id]
     );
     return res.rows[0].role;
   }
 
   async add_user(user: UserWithPassword): Promise<User> {
     let orderRes = await this.client.query(
-      'INSERT INTO Order (Open) VALUES (True) RETURNING *'
+      'INSERT INTO Orders (Open) VALUES (TRUE) RETURNING *'
     );
     let res = await this.client.query<User>(
-      'INSERT INTO User (Username, PasswordHash, Cart_ID) VALUES ($1, $2, $3) RETURNING (Id, Username)',
+      'INSERT INTO Users (Username, PasswordHash, Cart_ID) VALUES ($1, $2, $3) RETURNING (Id, Username)',
       [user.username, user.passwordHash, orderRes.rows[0].id]
     );
     return res.rows[0];
@@ -111,7 +122,7 @@ class Database {
 
   async get_cart_by_user(user: { id: Id }): Promise<Cart> {
     let orderRes = await this.client.query(
-      'SELECT Order.* FROM User JOIN Order ON User.Cart_ID = Order.ID WHERE User.ID = $1',
+      'SELECT Orders.* FROM Users JOIN Orders ON User.Cart_ID = Order.ID WHERE User.ID = $1',
       [user.id]
     );
     let itemRes = await this.client.query<Item>(
@@ -124,17 +135,23 @@ class Database {
 
   async place_order_by_user(user: { id: Id }): Promise<void> {
     await this.client.query<ClosedOrder>(
-      'UPDATE Order SET Open = False FROM User WHERE User.Cart_ID = Order.ID AND User.ID = $1',
+      'UPDATE Orders SET Open = False FROM Users WHERE User.Cart_ID = Order.ID AND User.ID = $1',
       [user.id]
     );
   }
 
   async add_item_to_cart(item: { id: Id }, user: { id: Id }): Promise<void> {
     await this.client.query<Cart>(
-      'INSERT INTO OrderItem SELECT $1, User.Cart_ID FROM User WHERE User.ID = $2',
+      'INSERT INTO OrderItem SELECT $1, User.Cart_ID FROM Users WHERE User.ID = $2',
       [item.id, user.id]
     );
   }
 }
 
-export let singleton: Database; //= new Database();
+export default new Database(new Client({
+  user: 'filip',
+  host: 'localhost',
+  database: 'filip',
+  password: 'pass',
+  port: 5432,
+}));
