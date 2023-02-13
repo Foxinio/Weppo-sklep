@@ -21,7 +21,7 @@ async function add_user(req, res) {
 	// maybe sanitize fields
 	if (validate_login(username) && validate_password(password)) {
 		const hash = hashSync(password, 12);
-		const new_user = {id: undefined, username, passwordHash: hash};
+		const new_user = {username, passwordHash: hash};
 		await db.add_user(new_user);
 		// TODO: add user to database
 		// database.add_user(new_user);

@@ -1,16 +1,16 @@
 import { Client } from 'pg';
 
 type Id = number;
-type User = { id: Id | undefined, username: string };
+type User = { id?: Id, username: string };
 type UserWithPassword = User & { passwordHash: string }
-type Item = { id: Id | undefined, name: string, description: string, price: number };
+type Item = { id?: Id, name: string, description: string, price: number };
 type Cart = {
-  id: Id | null,
+  id?: Id,
   open: true,
   items: Item[]
 }
 type ClosedOrder = {
-  id: Id | null,
+  id?: Id,
   open: false,
   items: Item[]
 }
