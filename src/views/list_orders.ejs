@@ -11,9 +11,11 @@
     <body>
 
         <header class="header-container">
-			<%- include('admin-buttons', locals.role) %>
             <h1 class="header">Little shop of horrors</h1>
-			<%- include('login-button', locals.username) %>
+			<section class="right-corner-menu">
+				<%- include('admin-buttons', locals.role) %>
+				<%- include('login-button', locals.username) %>
+			</section>
         </header>
 
         <section class="item_list">

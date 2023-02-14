@@ -36,18 +36,20 @@ async function cart_get(req, res) {
 	res.render('cart', {username: user.username, items, title: "Your cart", role});
 }
 
-async function new_item_get(_req, res) {
+async function new_item_get(req, res) {
 	console.log("new_item page requested");
-	res.render('new_item');
+	const role = req.user.role;
+	const username = req.user.username;
+	res.render('change_item', {item: undefined, role, username});
 }
 
 async function change_item_get(req, res) {
 	const itemToChange = req.params.id;
 	const item = await db.get_item({id: itemToChange});
+	const role = req.user.role;
+	const username = req.user.username;
 	console.log("change_item page requested");
-	let username = req.user.username;
-	let role = req.user.role;
-	res.render('change_item', {item, username, role});
+	res.render('change_item', {item, role, username});
 }
 
 async function list_users(req, res) {

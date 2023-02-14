@@ -18,7 +18,7 @@ async function query_items(req, res) {
 	console.log(`rendering app page with items: ${results}`);
 
 	const username = req.user;
-	const role = req.user.role;
+	const role = req.user ? req.user.role : "";
 	res.render('app', {username, role, items: results});
 }
 
@@ -28,7 +28,7 @@ async function add_item(req, res) {
 	const db_res = await db.add_item(new_item);
 	console.log(`added item ${JSON.stringify(new_item)} to database`);
 
-	res.json(db_res);
+	res.redirect('/');
 }
 
 async function modify_item(req, res) {
@@ -37,7 +37,7 @@ async function modify_item(req, res) {
 	const db_res = await db.modify_item(modified_item);
 	console.log(`modified item ${JSON.stringify(modified_item)} in database`);
 
-	res.json(db_res);
+	res.redirect('/');
 }
 
 async function delete_item(req, res) {
@@ -57,9 +57,9 @@ export default function register_api(app: express.Express): void {
 
 	app.get('/api/query', authorize(), json, query_items);
 
-	app.post('/api/item', authorize(roles.admin), json, add_item);
+	app.post('/api/add_item', authorize(roles.admin), json, add_item);
 
-	app.put('/api/item', authorize(roles.admin), json, modify_item);
+	app.post('/api/change_item', authorize(roles.admin), json, modify_item);
 
-	app.delete('/api/item/:id', authorize(roles.admin), delete_item);
+	app.delete('/api/delete_item/:id', authorize(roles.admin), delete_item);
 }

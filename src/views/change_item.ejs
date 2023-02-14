@@ -13,12 +13,18 @@
     <body>
 
         <header class="header-container">
-			<%- include('admin-buttons', locals.role) %>
             <h1 class="header">Little shop of horrors</h1>
-			<%- include('login-button', locals.username) %>
+			<section class="right-corner-menu">
+				<%- include('admin-buttons', locals.role) %>
+				<%- include('login-button', locals.username) %>
+			</section>
         </header>
 
-        <form class="edit-item-form form" method="POST">
+		<% if (item) { %>
+			<form class="edit-item-form form" method="POST" action="/api/change_item">
+		<% } else { %>
+			<form class="edit-item-form form" method="POST" action="/api/add_item">
+		<% } %>
 
             <section class="form_element">
                 <label for="name" class="label name_label">Name</label>
@@ -47,7 +53,11 @@
                 />
             </section>
             
+		<% if (item) { %>
             <button type="submit" class="button submit_button">Change</button>
+		<% } else { %>
+            <button type="submit" class="button submit_button">Add</button>
+		<% } %>
         </form>
 
     </body>

@@ -52,6 +52,9 @@
 									},
 									body: '{}'
 								})">+</button>
+				<% } else if (role === 'admin') { %>
+				<button onclick="fetch('/api/delete_item/<%=item.id%>', {method: 'DELETE'}); location.reload();" class="button login-button"> Delete </button>
+				<button onclick="location.href='/change_item/<%=item.id%>'" class="button login-button"> Modify </button>
 				<% } %>
 			</section>
 			<% }) %>
