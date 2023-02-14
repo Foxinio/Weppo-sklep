@@ -71,7 +71,7 @@ class Database {
 
   async get_users(): Promise<User[]> {
     let res = await this.client.query<User>(
-      'SELECT ID, Username FROM User'
+      'SELECT * FROM Users'
     );
     return res.rows;
   }
@@ -113,7 +113,7 @@ class Database {
 
   async get_orders(): Promise<Order[]> {
     let res = await this.client.query(
-      'SELECT * FROM Order');
+      'SELECT * FROM Orders');
     for (let order of res.rows)
       order.user = await this.get_user({id:order.user_id});
     return res.rows;
@@ -121,7 +121,7 @@ class Database {
 
   async get_cart_by_user(user: { id?: Id }): Promise<Cart> {
     let orderRes = await this.client.query(
-      'SELECT * FROM Order Open = TRUE AND User_ID = $1',
+      'SELECT * FROM Orders Open = TRUE AND User_ID = $1',
       [user.id]
     );
     if (!orderRes.rows[0])

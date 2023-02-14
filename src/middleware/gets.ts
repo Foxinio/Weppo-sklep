@@ -50,7 +50,7 @@ async function list_users(_req, res) {
 	// const users = database.get_users();
 	const users = await db.get_users();
 	console.log("list_users page requested");
-	res.render('list_users', {to_list: users});
+	res.render('list_users', {users: users});
 }
 
 async function list_orders(_req, res) {
