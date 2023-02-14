@@ -20,7 +20,7 @@ function validate_login(login: string): boolean {
 function validate_password(password: string): boolean {
 	const capital = /[A-Z]/.test(password);
 	const number = /[0-9]/.test(password);
-	return capital && number && validate_login(password) && password.length > 8;
+	return capital && number && validate_login(password) && password.length >= 8;
 }
 
 async function add_user(req, res) {

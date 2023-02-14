@@ -13,10 +13,13 @@ async function get_item(req, res) {
 async function query_items(req, res) {
 	const query = req.query;
 
+
 	const results = await db.query_items(query);
 	console.log(`quering database for ${JSON.stringify(query)}`);
+	console.log(`rendering app page with items: ${results}`);
 
-	res.json(results);
+	const username = req.user ? req.user.username : "";
+	res.render('app', {username, items: results});
 }
 
 async function add_item(req, res) {

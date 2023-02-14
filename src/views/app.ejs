@@ -22,10 +22,12 @@
 		</section>
 	</header>
 
-	<section class="searchbar justify-center">
-		<input name="search_input" class="input search_input" />
-		<button class="button search_button">Search</button>
-	</section>
+	<form method="GET" action="/api/query">
+		<section class="searchbar justify-center">
+			<input name="search_input" class="input search_input" />
+			<button class="button search_button">Search</button>
+		</section>
+	</form>
 
 	<section class="item_list">
 		<% items.forEach( item=> { %>
@@ -36,9 +38,16 @@
 				<p class="justify-center">
 					<%= item.description %>
 				</p>
-				<form method="POST" action="/api/cart/<%= item.id %>">
-					<button class="button add-to-cart_button">+</button>
-				</form>
+				<button class="button add-to-cart_button" onclick="
+							fetch('/api/cart/<%=item.id%>',
+								{
+									method: 'POST',
+									headers: {
+										Accept: 'application/json' ,
+										'Content-Type' : 'application/json'
+									},
+									body: '{}'
+								})">+</button>
 			</section>
 			<% }) %>
 
