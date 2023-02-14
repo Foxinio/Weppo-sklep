@@ -63,7 +63,7 @@ body {
 }
 
 .add-to-cart_button {
-    width: 2rem;
+    min-width: 2rem;
     justify-self: right;
 }
 
