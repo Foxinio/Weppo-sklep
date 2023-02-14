@@ -147,9 +147,10 @@ class Database {
   }
 
   async add_item_to_cart(item: { id?: Id }, user: { id?: Id }): Promise<void> {
+    let cart = await this.get_cart_by_user(user);
     await this.client.query<Cart>(
       'INSERT INTO OrderItem SELECT $1, Orders.ID FROM Orders WHERE Orders.User_ID = $2',
-      [item.id, user.id]
+      [cart.id, item.id]
     );
   }
 }
