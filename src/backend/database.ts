@@ -44,8 +44,8 @@ class Database {
 
   async query_items(query: string): Promise<Item[]> {
     let res = await this.client.query<Item>(
-      'SELECT * FROM Item WHERE Name LIKE $1 OR Description LIKE $1',
-      [`%${query}%`]
+      'SELECT * FROM Item WHERE LOWER(Name) LIKE $1 OR LOWER(Description) LIKE $1',
+      [`%${query.toLowerCase()}%`]
     );
     return res.rows;
   }
