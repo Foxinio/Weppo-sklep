@@ -7,16 +7,17 @@ export enum roles {
 
 export function authorize(...roles: roles[]) {
 	return async function (req, res, next) {
-		if (roles.length === 0) {
-			return next();
-		}
-		else if (req.signedCookies.user) {
-			const user = req.signedCookies.user;
-			if (roles.some(role => role === user.role)) {
+		if (req.signedCookies.user) {
+			const username = req.signedCookies.user;
+			const user = await db.get_user_by_username(username);
+			if (roles.length === 0 || roles.some(role => role === user.role)) {
 				req.user = user;
 				return next();
 			}
-			console.log(`authorization failed for user: ${user}, required roles are: ${roles}`);
+			console.log(`authorization failed for user: ${username}, required roles are: ${roles}`);
+		}
+		else if (roles.length === 0) {
+			return next();
 		}
 		// fallback na brak autoryzacji
 		res.redirect('/login?returnUrl=' + req.url);

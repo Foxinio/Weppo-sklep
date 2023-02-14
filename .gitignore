@@ -3,3 +3,6 @@ npm-debug.log*
 
 build/
 build/*
+
+.tsbuildinfo
+package-lock.json

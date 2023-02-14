@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="styles.css" />
+        <title>Little shop of horrors</title>
+    </head>
+
+    <body>
+
+        <header class="header-container">
+            <h1 class="header">Little shop of horrors</h1>
+            <section class="right-corner-menu">
+                <input type="button" onclick="location.href='cart'" class="button cart-button" value="Your cart" >
+                <p class="username"> <%= username %> </p>
+                <button onclick="location.href='login'" class="button login-button"> Log in/out </button>
+            </section>
+        </header>
+
+        <section class="searchbar justify-center">
+            <input name="search_input" class="input search_input"/>
+            <button class="button search_button">Search</button>
+        </section>
+
+        <section class="item_list">
+            <% users.forEach( user => { %>
+                <section class="item">
+                    <h3 class="justify-center"><%= user.username %></h3>
+                </section>
+            <% }) %>
+            
+        </section>
+
+    </body>
+</html>

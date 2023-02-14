@@ -31,11 +31,14 @@ async function add_user(req, res) {
 	if (validate_login(username) && validate_password(password)) {
 		const hash = await bcrypt.hash(password, 12);
 		const new_user = {username, passwordhash: hash};
-
-		if (await db.add_user(new_user))
+		const added_user = await db.add_user(new_user);
+		// TODO: add user to database
+		// database.add_user(new_user);
+		if (added_user !== undefined) {
 			console.log(`added user ${JSON.stringify(new_user)} to database`);
-
-		redirect_after_login(req,res);
+			res.cookie('user', added_user.id, {signed: true});
+			redirect_after_login(req, res);
+		}
 	}
 
 	res.status(400);
@@ -43,10 +46,7 @@ async function add_user(req, res) {
 }
 
 async function add_order(req, res) {
-	const user = req.signedCookies.user;
-
-	// TODO: database request: add users cart as an order
-	// database.add_order(user);
+	const user = req.user;
 	await db.place_order_by_user(user);
 	console.log(`added order from user: ${user} to database`);
 
@@ -55,10 +55,7 @@ async function add_order(req, res) {
 }
 
 async function cart_get(req, res) {
-	const user = req.signedCookies.user;
-
-	// TODO: database request to get current users cart
-	// const result = database.get_cart(user);
+	const user = req.user;
 	const result = await db.get_cart_by_user(user);
 	console.log(`responding with cart of user: ${user} to database`);
 
@@ -67,10 +64,7 @@ async function cart_get(req, res) {
 
 async function update_cart(req, res) {
 	const id = req.params.id;
-	const user = req.signedCookies.user;
-
-	// TODO: database request to add item to users cart
-	// database.update_cart(user, id);
+	const user = req.user;
 	await db.add_item_to_cart({id}, user);
 	console.log(`added item of id: ${id} to cart of user ${user}`);
 
@@ -88,8 +82,8 @@ async function login_post(req, res) {
 
 	if (user && password && await bcrypt.compare(password, user.passwordhash)) {
 		console.log(`loging in user ${username}`);
-		res.cookie('user', username, {signed: true});
-		redirect_after_login(req,res);
+		res.cookie('user', user.id, {signed: true});
+		redirect_after_login(req, res);
 	} else {
 		res.render('login', {message: "Given password and username don't match"});
 	}
