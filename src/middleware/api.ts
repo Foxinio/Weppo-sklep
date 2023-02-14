@@ -26,16 +26,17 @@ async function add_item(req, res) {
 	const new_item = req.body;
 
 	const db_res = await db.add_item(new_item);
-	console.log(`added item ${JSON.stringify(new_item)} to database`);
+	console.log(`added item ${JSON.stringify(new_item)} to database, with result: ${db_res}`);
 
 	res.redirect('/');
 }
 
 async function modify_item(req, res) {
 	const modified_item = req.body;
+	modified_item.id = req.params.id;
 
 	const db_res = await db.modify_item(modified_item);
-	console.log(`modified item ${JSON.stringify(modified_item)} in database`);
+	console.log(`modified item ${JSON.stringify(modified_item)} in database, with result: ${db_res}`);
 
 	res.redirect('/');
 }
@@ -59,7 +60,7 @@ export default function register_api(app: express.Express): void {
 
 	app.post('/api/add_item', authorize(roles.admin), json, add_item);
 
-	app.post('/api/change_item', authorize(roles.admin), json, modify_item);
+	app.post('/api/change_item/:id', authorize(roles.admin), json, modify_item);
 
 	app.delete('/api/delete_item/:id', authorize(roles.admin), delete_item);
 }

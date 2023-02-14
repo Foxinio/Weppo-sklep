@@ -21,7 +21,7 @@
         </header>
 
 		<% if (item) { %>
-			<form class="edit-item-form form" method="POST" action="/api/change_item">
+			<form class="edit-item-form form" method="POST" action="/api/change_item/<%= item.id %>">
 		<% } else { %>
 			<form class="edit-item-form form" method="POST" action="/api/add_item">
 		<% } %>
