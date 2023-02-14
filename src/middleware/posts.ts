@@ -39,8 +39,7 @@ async function add_user(req, res) {
 		}
 	}
 
-	res.status(400);
-	res.end();
+	res.render('login', {message: "Given password or username don't satisfy safty cryteria"});
 }
 
 async function add_order(req, res) {
