@@ -14,7 +14,9 @@
 	<header class="header-container">
 		<h1 class="header">Little shop of horrors</h1>
 		<section class="right-corner-menu">
-			<input type="button" onclick="location.href='/cart'" class="button cart-button" value="Your cart">
+			<% if (locals.role === 'loggedin_user') { %>
+				<button onclick="location.href='/cart'" class="button cart-button" >Your cart</button>
+			<% } %>
 			<%- include('login-button', locals.username) %>
 		</section>
 	</header>

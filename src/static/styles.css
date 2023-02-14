@@ -28,7 +28,6 @@ body {
 }
 
 .login-button {
-    width: 7rem;
     justify-self: right;
 }
 
@@ -58,6 +57,7 @@ body {
 
 .button {
     height: 2rem;
+    width: 7rem;
     background-color: antiquewhite;
     border-radius: 20rem;
 }
