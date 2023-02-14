@@ -27,13 +27,11 @@ async function add_user(req, res) {
 	const username = req.body.username;
 	const password = req.body.password;
 
-	// maybe sanitize fields
 	if (validate_login(username) && validate_password(password)) {
 		const hash = await bcrypt.hash(password, 12);
 		const new_user = {username, passwordhash: hash};
 		const added_user = await db.add_user(new_user);
-		// TODO: add user to database
-		// database.add_user(new_user);
+	
 		if (added_user !== undefined) {
 			console.log(`added user ${JSON.stringify(new_user)} to database`);
 			res.cookie('user', added_user.id, {signed: true});
@@ -77,8 +75,6 @@ async function login_post(req, res) {
 	const username = req.body.username;
 	const password = req.body.password;
 
-	// TODO: check if password matches
-	// const scrambled_password = database.get_scrambled_password(username);
 	const user = await db.get_user_by_username(username);
 
 	if (user && password && await bcrypt.compare(password, user.passwordhash)) {

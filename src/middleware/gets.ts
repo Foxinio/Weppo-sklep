@@ -53,8 +53,6 @@ async function change_item_get(req, res) {
 }
 
 async function list_users(req, res) {
-	// TODO: database request for users
-	// const users = database.get_users();
 	const users = await db.get_users();
 	const role = req.user.role;
 	const username = req.user.username;
@@ -63,8 +61,6 @@ async function list_users(req, res) {
 }
 
 async function list_orders(req, res) {
-	// TODO: database request for orders
-	// const users = database.get_orders();
 	const orders = await db.get_orders();
 	const role = req.user.role;
 	const username = req.user.username;
@@ -73,8 +69,6 @@ async function list_orders(req, res) {
 }
 
 async function list_order(req, res) {
-	// TODO: database request for orders
-	// const users = database.get_orders();
 	const order_id = req.params.id;
 	const role = req.user.role;
 	const items = await db.get_order_items({id: order_id});
