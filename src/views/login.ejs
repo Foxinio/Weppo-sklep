@@ -15,8 +15,11 @@
             <h1 class="header">Little shop of horrors</h1>
         </header>
 
+        
 			<% if (locals.message !== undefined) {%>
-				<h3> <%= message %> </h3>
+                <section class="form" style="background-color: rgb(255, 110, 38);">
+                    <h3> <%= message %> </h3>
+                </section>
 			<% } %>
 
         <form class="login-form form" method="POST">
