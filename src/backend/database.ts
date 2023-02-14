@@ -1,3 +1,4 @@
+import pg from 'pg';
 import { Client } from 'pg';
 import { roles } from '../middleware/authorization';
 import credentials from './credentials';
@@ -22,6 +23,7 @@ class Database {
 
   constructor(client: Client) {
     this.client = client
+    pg.types.setTypeParser(1700, parseFloat);
   }
 
   async connect() {
