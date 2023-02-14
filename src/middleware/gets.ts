@@ -45,7 +45,9 @@ async function change_item_get(req, res) {
 	const itemToChange = req.params.id;
 	const item = await db.get_item({id: itemToChange});
 	console.log("change_item page requested");
-	res.render('change_item', {item});
+	let username = req.user.username;
+	let role = req.user.role;
+	res.render('change_item', {item, username, role});
 }
 
 async function list_users(req, res) {

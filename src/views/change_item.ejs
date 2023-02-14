@@ -13,11 +13,9 @@
     <body>
 
         <header class="header-container">
+			<%- include('admin-buttons', locals.role) %>
             <h1 class="header">Little shop of horrors</h1>
-            <section class="right-corner-menu">
-                <p class="username"> <%= username.username %> </p>
-                <button class="button login-button" onclick="location.href='login-form'"> Log in/out </button>
-            </section>
+			<%- include('login-button', locals.username) %>
         </header>
 
         <form class="edit-item-form form" method="POST">
@@ -25,8 +23,8 @@
             <section class="form_element">
                 <label for="name" class="label name_label">Name</label>
                 <input id="name" name="name" class="input name_input"
-                <% if (item) { %> 
-                    value= <%= item.name %>  
+                <% if (item) { %>
+                    value= <%= item.name %>
                 <% } %>
                 />
             </section>
