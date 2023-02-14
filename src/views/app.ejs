@@ -36,6 +36,7 @@
 				<p class="justify-center">
 					<%= item.description %>
 				</p>
+				<% if (role === 'loggedin_user') { %>
 				<button class="button add-to-cart_button" onclick="
 							fetch('/api/cart/<%=item.id%>',
 								{
@@ -46,6 +47,7 @@
 									},
 									body: '{}'
 								})">+</button>
+				<% } %>
 			</section>
 			<% }) %>
 
