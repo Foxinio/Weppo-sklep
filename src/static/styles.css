@@ -53,7 +53,7 @@ body {
 .item {
     display: grid;
     background-color: lightcoral;
-    padding: 1rem;
+    padding: 0.3rem;
 }
 
 .button {
@@ -65,6 +65,10 @@ body {
 .add-to-cart_button {
     width: 2rem;
     justify-self: right;
+}
+
+.add-new_button {
+    margin-right: 2rem;
 }
 
 .justify-center {
