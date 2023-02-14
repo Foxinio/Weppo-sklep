@@ -1,6 +1,6 @@
 CREATE TABLE Users (
   ID SERIAL PRIMARY KEY,
-  Username TEXT NOT NULL,
+  Username TEXT NOT NULL UNIQUE,
   PasswordHash TEXT NOT NULL,
   Role TEXT
 );

@@ -89,13 +89,17 @@ class Database {
     return res.rows[0];
   }
 
-  async add_user(user: User): Promise<User> {
-    let res = await this.client.query<User>(
-      'INSERT INTO Users (Username, PasswordHash, Role) VALUES ($1, $2, $3) RETURNING *',
-      [user.username, user.passwordhash, roles.normal_user]
-    );
-    this.open_new_cart(res.rows[0]);
-    return res.rows[0];
+  async add_user(user: User): Promise<User | undefined> {
+    try {
+      let res = await this.client.query<User>(
+        'INSERT INTO Users (Username, PasswordHash, Role) VALUES ($1, $2, $3) RETURNING *',
+        [user.username, user.passwordhash, roles.normal_user]
+      );
+      await this.open_new_cart(res.rows[0]);
+      return res.rows[0];
+    } catch (e) {
+      return undefined;
+    }
   }
 
   async open_new_cart(user: {id?: Id}): Promise<Cart> {

@@ -31,10 +31,10 @@ async function add_user(req, res) {
 	if (validate_login(username) && validate_password(password)) {
 		const hash = await bcrypt.hash(password, 12);
 		const new_user = {username, passwordhash: hash};
-		await db.add_user(new_user);
-		// TODO: add user to database
-		// database.add_user(new_user);
-		console.log(`added user ${JSON.stringify(new_user)} to database`);
+
+		if (await db.add_user(new_user))
+			console.log(`added user ${JSON.stringify(new_user)} to database`);
+
 		redirect_after_login(req,res);
 	}
 
