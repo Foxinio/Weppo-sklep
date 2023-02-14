@@ -58,7 +58,7 @@ async function list_orders(_req, res) {
 	// const users = database.get_orders();
 	const orders = await db.get_orders();
 	console.log("list_orders page requested");
-	res.render('list_orders', {to_list: orders});
+	res.render('list_orders', {orders: orders});
 }
 
 async function list_order(_req, res) {

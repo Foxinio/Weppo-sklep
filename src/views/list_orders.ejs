@@ -14,7 +14,7 @@
             <h1 class="header">Little shop of horrors</h1>
             <section class="right-corner-menu">
                 <input type="button" onclick="location.href='cart'" class="button cart-button" value="Your cart" >
-                <p class="username"> <%= username %> </p>
+                <p class="username"> <%= locals.username %> </p>
                 <button onclick="location.href='login'" class="button login-button"> Log in/out </button>
             </section>
         </header>
@@ -27,9 +27,9 @@
         <section class="item_list">
             <% orders.forEach( order => { %>
                 <section class="item">
-                    <h3 class="justify-center"> <%= order.username %></h3>
+                    <h3 class="justify-center"> <%= order.user.username %></h3>
                     <p class="justify-center"> <%= order.open ? "Open" : "Closed" %></p>
-                    <button class="button add-to-cart_button" onclick="location.href='/list_order/<%= order.id %>'>view order</button>
+                    <button class="button add-to-cart_button" onclick="location.href='/list_order/<%= order.id %>'">view order</button>
                 </section>
             <% }) %>
             
