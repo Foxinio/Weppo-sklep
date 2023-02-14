@@ -66,8 +66,8 @@ async function list_order(req, res) {
 	// const users = database.get_orders();
 	const order_id = req.params.id;
 	const items = await db.get_order_items({id: order_id});
-	console.log("list_orders page requested");
-	res.render('cart', {user: req.user.username, to_list: items});
+	console.log("list_order page requested");
+	res.render('cart', {username: req.user.username, items});
 }
 
 export default function register_gets(app: Express): void {
