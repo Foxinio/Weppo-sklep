@@ -2,7 +2,7 @@ import { Client } from 'pg';
 import { roles } from '../middleware/authorization';
 
 type Id = number;
-type User = { id?: Id, username: string, passwordHash: string, role?: roles };
+type User = { id?: Id, username: string, passwordhash: string, role?: roles };
 type Item = { id?: Id, name: string, description: string, price: number };
 type Cart = {
   id?: Id,
@@ -95,7 +95,7 @@ class Database {
     );
     let res = await this.client.query<User>(
       'INSERT INTO Users (Username, PasswordHash, Cart_ID) VALUES ($1, $2, $3) RETURNING (Id, Username)',
-      [user.username, user.passwordHash, orderRes.rows[0].id]
+      [user.username, user.passwordhash, orderRes.rows[0].id]
     );
     return res.rows[0];
   }

@@ -30,13 +30,14 @@ async function add_user(req, res) {
 	// maybe sanitize fields
 	if (validate_login(username) && validate_password(password)) {
 		const hash = await bcrypt.hash(password, 12);
-		const new_user = {username, passwordHash: hash};
+		const new_user = {username, passwordhash: hash};
 		await db.add_user(new_user);
 		// TODO: add user to database
 		// database.add_user(new_user);
 		console.log(`added user ${JSON.stringify(new_user)} to database`);
 		redirect_after_login(req,res);
 	}
+
 	res.status(400);
 	res.end();
 }
@@ -83,9 +84,9 @@ async function login_post(req, res) {
 
 	// TODO: check if password matches
 	// const scrambled_password = database.get_scrambled_password(username);
-	const user = await db.get_user(username);
+	const user = await db.get_user_by_username(username);
 
-	if (user && await bcrypt.compare(password, user.passwordHash)) {
+	if (user && password && await bcrypt.compare(password, user.passwordhash)) {
 		console.log(`loging in user ${username}`);
 		res.cookie('user', username, {signed: true});
 		redirect_after_login(req,res);
