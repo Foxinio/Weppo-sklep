@@ -18,11 +18,15 @@
 		</section>
 	</header>
 
-	<section class="cart-display">
+
 		<section class="cart-header-container">
 			<h2 class="cart-header"> <%= title %> </h2>
 			<% let total=0; items.forEach(item=> total = total + item.price)%>
 			<p class="cart-total"> Total price: <%= total.toFixed(2) %> </p>
+
+			<% if (title === "Your cart" && items.length > 0) { %>
+				<input type="button" onclick="fetch('/api/order', {method: 'POST'}); location.reload();" class="button cart-button" value="Finish Order">
+				<% } %>
 		</section>
 
 			<section class="item_list">
@@ -41,10 +45,7 @@
 					<% }) %>
 			</section>
 
-			<% if (title === "Your cart" && items.length > 0) { %>
-			<input type="button" onclick="fetch('/api/order', {method: 'POST'}); location.reload();" class="button cart-button" value="Finish Order">
-			<% } %>
-	</section>
+	
 </body>
 
 </html>
