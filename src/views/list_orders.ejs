@@ -12,11 +12,7 @@
 
         <header class="header-container">
             <h1 class="header">Little shop of horrors</h1>
-            <section class="right-corner-menu">
-                <input type="button" onclick="location.href='cart'" class="button cart-button" value="Your cart" >
-                <p class="username"> <%= locals.username %> </p>
-                <button onclick="location.href='login'" class="button login-button"> Log in/out </button>
-            </section>
+			<%- include('login-button', locals.username) %>
         </header>
 
         <section class="searchbar justify-center">

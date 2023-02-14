@@ -10,10 +10,7 @@
 
     <header class="header-container">
         <h1 class="header">Little shop of horrors</h1>
-        <section class="right-corner-menu">
-            <p class="username"> <%= username.username %> </p>
-            <button class="button login-button"> Log in/out </button>
-        </section>
+		<%- include('login-button', locals.username %>
     </header>
 
     <section class="cart-display">

@@ -17,7 +17,7 @@ async function query_items(req, res) {
 	console.log(`quering database for ${JSON.stringify(query)}`);
 	console.log(`rendering app page with items: ${results}`);
 
-	const username = req.user ? req.user.username : "";
+	const username = req.user ? req.user.username : undefined;
 	res.render('app', {username, items: results});
 }
 

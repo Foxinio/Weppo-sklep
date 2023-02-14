@@ -10,7 +10,8 @@ function logout(res) {
 async function app_get(req, res) {
 	const items = await db.get_items();
 	console.log("app page requested");
-	res.render('app', {username: req.user.username, items});
+	const username = req.user ? req.user.username : undefined;
+	res.render('app', {username, items});
 }
 
 async function login_get(_req, res) {
