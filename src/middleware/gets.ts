@@ -10,7 +10,7 @@ function logout(res) {
 async function app_get(req, res) {
 	const items = await db.get_items();
 	console.log("app page requested");
-	res.render('app', {username: req.user, items});
+	res.render('app', {username: req.user.username, items});
 }
 
 async function login_get(_req, res) {
@@ -30,7 +30,7 @@ async function cart_get(req, res) {
 	const items = await db.get_order_items(cart);
 
 	console.log("cart page requested");
-	res.render('cart', {username: user, items});
+	res.render('cart', {username: user.username, items});
 }
 
 async function new_item_get(_req, res) {
