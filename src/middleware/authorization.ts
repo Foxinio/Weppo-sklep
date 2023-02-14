@@ -8,13 +8,14 @@ export enum roles {
 export function authorize(...roles: roles[]) {
 	return async function (req, res, next) {
 		if (req.signedCookies.user) {
-			const username = req.signedCookies.user;
-			const user = await db.get_user_by_username(username);
+			const user_id = req.signedCookies.user;
+			const user = await db.get_user({id: user_id});
+
 			if (roles.length === 0 || roles.some(role => role === user.role)) {
 				req.user = user;
 				return next();
 			}
-			console.log(`authorization failed for user: ${username}, required roles are: ${roles}`);
+			console.log(`authorization failed for user: ${user.id}, required roles are: ${roles}`);
 		}
 		else if (roles.length === 0) {
 			return next();
