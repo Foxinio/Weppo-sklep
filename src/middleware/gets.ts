@@ -51,7 +51,7 @@ async function list_users(_req, res) {
 	// const users = database.get_users();
 	const users = await db.get_users();
 	console.log("list_users page requested");
-	res.render('list_users', {users: users});
+	res.render('list_users', {username: _req.user.username, users: users});
 }
 
 async function list_orders(_req, res) {
@@ -59,7 +59,7 @@ async function list_orders(_req, res) {
 	// const users = database.get_orders();
 	const orders = await db.get_orders();
 	console.log("list_orders page requested");
-	res.render('list_orders', {orders: orders});
+	res.render('list_orders', {username: _req.user.username, orders: orders});
 }
 
 async function list_order(req, res) {
