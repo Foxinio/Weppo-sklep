@@ -13,10 +13,13 @@
         <header class="header-container">
             <h1 class="header">Little shop of horrors</h1>
 			<section class="right-corner-menu">
-				<%- include('admin-buttons', locals.role) %>
 				<%- include('login-button', locals.username) %>
 			</section>
         </header>
+
+        <section class="admin-buttons justify-center">
+            <%- include('admin-buttons', locals.role) %>
+        </section>
 
         <section class="searchbar justify-center">
             <input name="search_input" class="input search_input"/>

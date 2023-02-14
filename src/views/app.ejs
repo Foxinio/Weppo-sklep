@@ -14,14 +14,18 @@
 	<header class="header-container">
 		<h1 class="header">Little shop of horrors</h1>
 		<section class="right-corner-menu">
-			<%- include('admin-buttons', locals.role) %>
 			<input type="button" onclick="location.href='/cart'" class="button cart-button" value="Your cart">
 			<%- include('login-button', locals.username) %>
 		</section>
 	</header>
 
+	<section class="admin-buttons justify-center">
+		<%- include('admin-buttons', locals.role) %>
+	</section>
+
 	<form method="GET" action="/api/query" class="justify-center">
 		<section class="searchbar">
+			<button onclick="location.href='/'" class="button catalogue-button"> Catalogue </button>
 			<input name="search_input" class="input search_input" />
 			<button class="button search_button">Search</button>
 		</section>
