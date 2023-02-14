@@ -98,7 +98,6 @@ class Database {
         'INSERT INTO Users (Username, PasswordHash, Role) VALUES ($1, $2, $3) RETURNING *',
         [user.username, user.passwordhash, roles.normal_user]
       );
-      await this.open_new_cart(res.rows[0]);
       return res.rows[0];
     } catch (e) {
       return undefined;
@@ -145,7 +144,6 @@ class Database {
       'UPDATE Orders SET Open = False WHERE User_ID = $1',
       [user.id]
     );
-    await this.open_new_cart(user);
   }
 
   async add_item_to_cart(item: { id?: Id }, user: { id?: Id }): Promise<void> {
