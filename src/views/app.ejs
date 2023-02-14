@@ -13,7 +13,11 @@
 
 	<header class="header-container">
 		<h1 class="header">Little shop of horrors</h1>
-		<%- include('login-button', locals.username) %>
+		<section class="right-corner-menu">
+			<%- include('admin-buttons', locals.role) %>
+			<input type="button" onclick="location.href='/cart'" class="button cart-button" value="Your cart">
+			<%- include('login-button', locals.username) %>
+		</section>
 	</header>
 
 	<form method="GET" action="/api/query">

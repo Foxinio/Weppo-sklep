@@ -11,13 +11,9 @@
 
 <body>
 
-   	<p class="username">
-   		<%= username %>
-   	</p>
-   	<% if (username === undefined) { %>
-   	<button onclick="location.href='/login'" class="button login-button"> Log in/Sign in </button>
-   	<% } else { %>
-   	<button onclick="location.href='/logout'" class="button login-button"> Logout </button>
+   	<% if (role && role === 'admin') { %>
+		<button onclick="location.href='/list_users'" class="button login-button"> View Users </button>
+		<button onclick="location.href='/list_orders'" class="button login-button"> View Orders </button>
    	<% } %>
 
 </body>

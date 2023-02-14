@@ -10,8 +10,9 @@ function logout(res) {
 async function app_get(req, res) {
 	const items = await db.get_items();
 	console.log("app page requested");
+	const role = req.user ? req.user.role : "";
 	const username = req.user ? req.user.username : undefined;
-	res.render('app', {username, items});
+	res.render('app', {username, items, role});
 }
 
 async function login_get(_req, res) {
@@ -29,9 +30,10 @@ async function cart_get(req, res) {
 	const user = req.user;
 	const cart = await db.get_cart_by_user(user);
 	const items = await db.get_order_items(cart);
+	const role = req.user.role;
 
 	console.log(`cart page requested. Items: [${items}]`);
-	res.render('cart', {username: user.username, items});
+	res.render('cart', {username: user.username, items, title: "Your cart", role});
 }
 
 async function new_item_get(_req, res) {
@@ -46,29 +48,35 @@ async function change_item_get(req, res) {
 	res.render('change_item', {item});
 }
 
-async function list_users(_req, res) {
+async function list_users(req, res) {
 	// TODO: database request for users
 	// const users = database.get_users();
 	const users = await db.get_users();
+	const role = req.user.role;
+	const username = req.user.username;
 	console.log("list_users page requested");
-	res.render('list_users', {username: _req.user.username, users: users});
+	res.render('list_users', {users: users, username, role});
 }
 
-async function list_orders(_req, res) {
+async function list_orders(req, res) {
 	// TODO: database request for orders
 	// const users = database.get_orders();
 	const orders = await db.get_orders();
+	const role = req.user.role;
+	const username = req.user.username;
 	console.log("list_orders page requested");
-	res.render('list_orders', {username: _req.user.username, orders: orders});
+	res.render('list_orders', {orders: orders, username, role});
 }
 
 async function list_order(req, res) {
 	// TODO: database request for orders
 	// const users = database.get_orders();
 	const order_id = req.params.id;
+	const role = req.user.role;
 	const items = await db.get_order_items({id: order_id});
+	const title = "";
 	console.log("list_order page requested");
-	res.render('cart', {username: req.user.username, items});
+	res.render('cart', {username: req.user.username, items, title, role});
 }
 
 export default function register_gets(app: Express): void {
