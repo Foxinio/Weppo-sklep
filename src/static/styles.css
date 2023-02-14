@@ -67,10 +67,15 @@ body {
     justify-self: right;
 }
 
-.add-new_button {
-    margin-right: 2rem;
-}
-
 .justify-center {
     justify-self: center;
+}
+
+.cart-header-container {
+    display: grid;
+    justify-items: center;
+}
+
+.cart-header {
+    margin: auto;
 }

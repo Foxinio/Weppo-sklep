@@ -19,21 +19,22 @@
 	</header>
 
 	<section class="cart-display">
-		<h2 class="cart-header"> <%= title %></h2>
-		<% let total=0; items.forEach(item=> total = total + item.price)%>
-			<p>Total price: <%= total %>
-			</p>
+		<section class="cart-header-container">
+			<h2 class="cart-header"> <%= title %> </h2>
+			<% let total=0; items.forEach(item=> total = total + item.price)%>
+			<p class="cart-total"> Total price: <%= total %> </p>
+		</section>
 
 			<section class="item_list">
 				<% items.forEach( item=> { %>
 					<section class="item">
-						<h3>
+						<h3 class="justify-center">
 							<%= item.name %>
 						</h3>
-						<p>
+						<p class="justify-center">
 							<%= item.description %>
 						</p>
-						<p>
+						<p class="justify-center">
 							<%= item.price %>
 						</p>
 					</section>

@@ -21,7 +21,7 @@
 	</header>
 
 	<form method="GET" action="/api/query" class="justify-center">
-		<section class="searchbar justify-center">
+		<section class="searchbar">
 			<input name="search_input" class="input search_input" />
 			<button class="button search_button">Search</button>
 		</section>
@@ -36,7 +36,12 @@
 				<p class="justify-center">
 					<%= item.description %>
 				</p>
+				<p class="justify-center">
+					<%= item.price %>
+				</p>
+
 				<% if (role === 'loggedin_user') { %>
+
 				<button class="button add-to-cart_button" onclick="
 							fetch('/api/cart/<%=item.id%>',
 								{
