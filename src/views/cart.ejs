@@ -22,7 +22,7 @@
 		<section class="cart-header-container">
 			<h2 class="cart-header"> <%= title %> </h2>
 			<% let total=0; items.forEach(item=> total = total + item.price)%>
-			<p class="cart-total"> Total price: <%= total %> </p>
+			<p class="cart-total"> Total price: <%= total.toFixed(2) %> </p>
 		</section>
 
 			<section class="item_list">
