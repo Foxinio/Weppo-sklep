@@ -1,39 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="styles.css" />
-        <title>Little shop of horrors</title>
-    </head>
 
-    <body>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="styles.css" />
+	<title>Little shop of horrors</title>
+</head>
 
-        <header class="header-container">
-            <h1 class="header">Little shop of horrors</h1>
-            <section class="right-corner-menu">
-                <input type="button" onclick="location.href='cart'" class="button cart-button" value="Your cart" >
-                <p class="username"> <%= username %> </p>
-                <button onclick="location.href='login'" class="button login-button"> Log in/out </button>
-            </section>
-        </header>
+<body>
 
-        <section class="searchbar justify-center">
-            <input name="search_input" class="input search_input"/>
-            <button class="button search_button">Search</button>
-        </section>
+	<header class="header-container">
+		<h1 class="header">Little shop of horrors</h1>
+		<section class="right-corner-menu">
+			<input type="button" onclick="location.href='cart'" class="button cart-button" value="Your cart">
+			<p class="username">
+				<%= username %>
+			</p>
+			<button onclick="location.href='login'" class="button login-button"> Log in/out </button>
+		</section>
+	</header>
 
-        <section class="item_list">
-            <% items.forEach( item => { %>
-                <section class="item">
-                    <h3 class="justify-center"><%= item.name %></h3>
-                    <p class="justify-center"><%= item.description %></p>
-                    <button class="button add-to-cart_button">+</button>
-                </section>
-            <% }) %>
-            
-        </section>
+	<section class="searchbar justify-center">
+		<input name="search_input" class="input search_input" />
+		<button class="button search_button">Search</button>
+	</section>
 
-    </body>
+	<section class="item_list">
+		<% items.forEach( item=> { %>
+			<section class="item">
+				<h3 class="justify-center">
+					<%= item.name %>
+				</h3>
+				<p class="justify-center">
+					<%= item.description %>
+				</p>
+				<form method="POST" action="/api/cart/<%= item.id %>">
+					<button class="button add-to-cart_button">+</button>
+				</form>
+			</section>
+			<% }) %>
+
+	</section>
+
+</body>
+
 </html>

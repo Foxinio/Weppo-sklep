@@ -65,6 +65,7 @@ async function cart_get(req, res) {
 async function update_cart(req, res) {
 	const id = req.params.id;
 	const user = req.user;
+	console.log(`adding item to database. User: ${JSON.stringify(user)}, item_id: ${id}`);
 	await db.add_item_to_cart({id}, user);
 	console.log(`added item of id: ${id} to cart of user ${user}`);
 

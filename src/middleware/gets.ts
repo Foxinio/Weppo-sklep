@@ -29,7 +29,7 @@ async function cart_get(req, res) {
 	const cart = await db.get_cart_by_user(user);
 	const items = await db.get_order_items(cart);
 
-	console.log("cart page requested");
+	console.log(`cart page requested. Items: [${items}]`);
 	res.render('cart', {username: user.username, items});
 }
 
