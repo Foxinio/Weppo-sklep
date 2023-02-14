@@ -11,8 +11,7 @@ async function get_item(req, res) {
 }
 
 async function query_items(req, res) {
-	const query = req.query;
-
+	const query = req.query.search_input;
 
 	const results = await db.query_items(query);
 	console.log(`quering database for ${JSON.stringify(query)}`);
