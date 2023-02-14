@@ -15,7 +15,7 @@
         <header class="header-container">
             <h1 class="header">Little shop of horrors</h1>
             <section class="right-corner-menu">
-                <p class="username"> <%= username %> </p>
+                <p class="username"> <%= username.username %> </p>
                 <button class="button login-button" onclick="location.href='login-form'"> Log in/out </button>
             </section>
         </header>
@@ -33,12 +33,20 @@
             
             <section class="form_element">
                 <label for="description" class="label description_label">Description</label>
-                <input id="description" name="description" class="input description_input"/>
+                <input id="description" name="description" class="input description_input"
+                <% if (item) { %> 
+                    value= <%= item.description %>  
+                <% } %>
+                />
             </section>
 
             <section class="form_element">
                 <label for="price" class="label price_label">Price</label>
-                <input id="price" name="price" class="input price_input"/>
+                <input id="price" name="price" class="input price_input"
+                <% if (item) { %> 
+                    value= <%= item.price %>  
+                <% } %>
+                />
             </section>
             
             <button type="submit" class="button submit_button">Change</button>

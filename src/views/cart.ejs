@@ -11,14 +11,16 @@
     <header class="header-container">
         <h1 class="header">Little shop of horrors</h1>
         <section class="right-corner-menu">
-            <p class="username"> <%= username %> </p>
+            <p class="username"> <%= username.username %> </p>
             <button class="button login-button"> Log in/out </button>
         </section>
     </header>
 
     <section class="cart-display">
         <h2 class="cart-header"> Your cart</h2>
-        <p>Suma: </p>
+        <% const total=0;
+        items.forEach(item => total= total + item.price)%>
+        <p>Total price: <%= total %></p>
 
         <section class="item_list">
             <% items.forEach( item => { %>
