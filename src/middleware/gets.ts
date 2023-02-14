@@ -61,12 +61,13 @@ async function list_orders(_req, res) {
 	res.render('list_orders', {orders: orders});
 }
 
-async function list_order(_req, res) {
+async function list_order(req, res) {
 	// TODO: database request for orders
 	// const users = database.get_orders();
-	const orders = await db.get_orders();
+	const order_id = req.params.id;
+	const items = await db.get_order_items({id: order_id});
 	console.log("list_orders page requested");
-	res.render('list_orders', {to_list: orders});
+	res.render('cart', {user: req.user.username, to_list: items});
 }
 
 export default function register_gets(app: Express): void {
