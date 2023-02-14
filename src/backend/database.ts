@@ -1,5 +1,6 @@
 import { Client } from 'pg';
 import { roles } from '../middleware/authorization';
+import credentials from './credentials';
 
 type Id = number;
 type User = { id?: Id, username: string, passwordhash: string, role?: roles };
@@ -153,10 +154,4 @@ class Database {
   }
 }
 
-export default new Database(new Client({
-  user: 'filip',
-  host: 'localhost',
-  database: 'filip',
-  password: 'pass',
-  port: 5432,
-}));
+export default new Database(new Client(credentials));
