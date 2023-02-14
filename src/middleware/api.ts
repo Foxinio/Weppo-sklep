@@ -39,7 +39,7 @@ async function modify_item(req, res) {
 
 	// TODO: database modify item in database
 	// const modified_item = database.modify_item(modified_item);
-	const db_res = db.modify_item(modified_item);
+	const db_res = await db.modify_item(modified_item);
 	console.log(`modified item ${JSON.stringify(modified_item)} in database`);
 
 	res.json(db_res);
